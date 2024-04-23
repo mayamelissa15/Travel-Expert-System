@@ -1,40 +1,36 @@
 import tkinter as tk
 from tkinter import ttk
 import numpy as np
-from aima.utils import *
-from aima.logic import *
+from aima3.utils import *
+from aima3.logic import *
 
 #KB
 kb = FolKB()
-kb.tell(expr('Target(x)'))
-kb.tell(expr('Leisure(x)'))
-kb.tell(expr('Preference(x)'))
-kb.tell(expr('Cost(x)'))
-kb.tell(expr('Leisure(Beach)'))
-kb.tell(expr('Leisure(Historical)'))
-kb.tell(expr('Leisure(Nature)'))
-kb.tell(expr('Leisure(City)'))
-kb.tell(expr('Preference(Secluded)'))
-kb.tell(expr('Preference(Crowded)'))
-kb.tell(expr('Cost(Cheap)'))
-kb.tell(expr('Cost(Luxurious)'))
-kb.tell(expr('Leisure(x) & Preference(y) & Cost(z) ==> Target(k)'))
-kb.tell(expr('Leisure(Beach) & Preference(Secluded) & Cost(Cheap) ==> Target(Beach,Secluded,Cheap,Tichy_Beach)'))
-kb.tell(expr('Leisure(Beach) & Preference(Secluded) & Cost(Luxurious) ==> Target(Beach,Secluded,Luxurious,Thais_Beach)'))
-kb.tell(expr('Leisure(Beach) & Preference(Crowded) & Cost(Cheap) ==> Target(Beach,Crowded,Cheap,Les_Aiguades_Beach)'))
-kb.tell(expr('Leisure(Beach) & Preference(Crowded) & Cost(Luxurious) ==> Target(Beach,Crowded,Luxurious,Atlantis_Beach)'))
-kb.tell(expr('Leisure(Historical) & Preference(Secluded) & Cost(Cheap) ==> Target(Historical,Secluded,Cheap,Bourdj_Moussa_Museum)'))
-kb.tell(expr('Leisure(Historical) & Preference(Secluded) & Cost(Luxurious) ==> Target(Historical,Secluded,Luxurious,Enchanted_cave)'))
-kb.tell(expr('Leisure(Historical) & Preference(Crowded) & Cost(Cheap) ==> Target(Historical,Crowded,Cheap,Casbah_of_Béjaïa)'))
-kb.tell(expr('Leisure(Historical) & Preference(Crowded) & Cost(Luxurious) ==> Target(Historical,Crowded,Luxurious,Water_Museum)'))
-kb.tell(expr('Leisure(Nature) & Preference(Secluded) & Cost(Cheap) ==> Target(Nature,Secluded,Cheap,Kafrida_Waterfalls)'))
-kb.tell(expr('Leisure(Nature) & Preference(Secluded) & Cost(Luxurious) ==> Target(Nature,Secluded,Luxurious,Dark_Lake)'))
-kb.tell(expr('Leisure(Nature) & Preference(Crowded) & Cost(Cheap) ==> Target(Nature,Crowded,Cheap,Cap_Carbon)'))
-kb.tell(expr('Leisure(Nature) & Preference(Crowded) & Cost(Luxurious) ==> Target(Nature,Crowded,Luxurious,Tizi_Nberbar)'))
-kb.tell(expr('Leisure(City) & Preference(Secluded) & Cost(Cheap) ==> Target(City,Secluded,Cheap,Medina)'))
-kb.tell(expr('Leisure(City) & Preference(Secluded) & Cost(Luxurious) ==> Target(City,Secluded,Luxurious,Taos_Amrouche_Culture_House)'))
-kb.tell(expr('Leisure(City) & Preference(Crowded) & Cost(Cheap) ==> Target(City,Crowded,Cheap,Place_Gueydon)'))
-kb.tell(expr('Leisure(City) & Preference(Crowded) & Cost(Luxurious) ==> Target(City,Crowded,Luxurious,Souk_El_Djemaa)'))
+kb.tell(expr('Beach(x)'))
+kb.tell(expr('Historical(x)'))
+kb.tell(expr('Nature(x)'))
+kb.tell(expr('City(x)'))
+kb.tell(expr('Secluded(x)'))
+kb.tell(expr('Crowded(x)'))
+kb.tell(expr('Luxurious(x)'))
+kb.tell(expr('Cheap(x)'))
+kb.tell(expr('Beach(x) & Secluded(x) & Cheap(x) ==> TichyBeach(x)'))
+kb.tell(expr('Beach(x) & Crowded(x) & Cheap(x) ==> AiguadesBeach(x)'))
+kb.tell(expr('Beach(x) & Secluded(x) & Luxurious(x) ==> ThaisBeach(x)'))
+kb.tell(expr('Beach(x) & Crowded(x) & Luxurious(x) ==> AtlantisBeach(x)'))
+kb.tell(expr('Historical(x) & Secluded(x) & Cheap(x) ==> BourdjMoussaMuseum(x)'))
+kb.tell(expr('Historical(x) & Secluded(x)  & Luxurious(x) ==> EnchantedCave(x)'))
+kb.tell(expr('Historical(x) & Crowded(x) & Cheap(x) ==> CasbahofBéjaïa(x)'))
+kb.tell(expr('Historical(x) & Crowded(x) & Luxurious(x) ==> WaterMuseum(x)'))
+kb.tell(expr('Nature(x) & Secluded(x) & Cheap(x) ==> KafridaWaterfalls(x)'))
+kb.tell(expr('Nature(x) & Secluded(x) & Luxurious(x) ==> DarkLake(x)'))
+kb.tell(expr('Nature(x) & Crowded(x) & Cheap(x) ==> CapCarbon(x)'))
+kb.tell(expr('Nature(x) & Crowded(x) & Luxurious(x) ==> TiziNberbar(x)'))
+kb.tell(expr('City(x) & Secluded(x) & Cheap(x) ==> Medina(x)'))
+kb.tell(expr('City(x) & Secluded(x) & Luxurious(x) ==> TaosAmroucheCultureHouse(x)'))
+kb.tell(expr('City(x) & Crowded(x) & Cheap(x) ==> PlaceGueydon(x)'))
+kb.tell(expr('City(x) & Crowded(x) & Luxurious(x) ==> SoukElDjemaa(x)'))
+
 
 def button_func():
     query = expr(f'Target({var_1.get()},{var_2.get()},{var_3.get()},k)')
