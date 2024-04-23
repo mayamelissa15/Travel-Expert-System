@@ -34,67 +34,67 @@ kb.tell(expr('City(x) & Crowded(x) & Luxurious(x) ==> SoukElDjemaa(x)'))
 
 
 
-#agenda
+# #agenda
 
-agenda = []
+# agenda = []
  
-agenda.append(expr('Luxurious(x)'))
-agenda.append(expr('Cheap(x)'))
-agenda.append(expr('Crowded(x)'))
-agenda.append(expr('Secluded(x)'))
-agenda.append(expr('Historical(x)'))
-agenda.append(expr('Nature(x)')) 
-agenda.append(expr('City(x)'))
+# agenda.append(expr('Luxurious(x)'))
+# agenda.append(expr('Cheap(x)'))
+# agenda.append(expr('Crowded(x)'))
+# agenda.append(expr('Secluded(x)'))
+# agenda.append(expr('Historical(x)'))
+# agenda.append(expr('Nature(x)')) 
+# agenda.append(expr('City(x)'))
 
 
-# Initialisation de la mémoire
-memory = {}
+# # Initialisation de la mémoire
+# memory = {}
 
-seen = set() 
-while agenda:
-    p = agenda.pop(0)
-    if p in seen:
-        continue  
-    seen.add(p)
-    if fol_fc_ask(kb, p):
-        print(f'{p} is true.')
-        memory[p] = True
-    else:
-        print(f'{p} is false.')
-        memory[p] = False
+# seen = set() 
+# while agenda:
+#     p = agenda.pop(0)
+#     if p in seen:
+#         continue  
+#     seen.add(p)
+#     if fol_fc_ask(kb, p):
+#         print(f'{p} is true.')
+#         memory[p] = True
+#     else:
+#         print(f'{p} is false.')
+#         memory[p] = False
 
-# Liste des conditions à vérifier
-conditions = [
-    expr('TichyBeach(x)'),
-    expr('AiguadesBeach(x)'),
-    expr('ThaisBeach(x)'),
-    expr('AtlantisBeach(x)'),
-    expr('BourdjMoussaMuseum(x)'),
-    expr('EnchantedCave(x)'),
-    expr('CasbahofBéjaïa(x)'),
-    expr('WaterMuseum(x)'),
-    expr('KafridaWaterfalls(x)'),
-    expr('DarkLake(x)'),
-    expr('CapCarbon(x)'),
-    expr('TiziNberbar(x)'),
-    expr('Medina(x)'),
-    expr('TaosAmroucheCultureHouse(x)'),
-    expr('PlaceGueydon(x)'),
-    expr('SoukElDjemaa(x)')
-]
+# # Liste des conditions à vérifier
+# conditions = [
+#     expr('TichyBeach(x)'),
+#     expr('AiguadesBeach(x)'),
+#     expr('ThaisBeach(x)'),
+#     expr('AtlantisBeach(x)'),
+#     expr('BourdjMoussaMuseum(x)'),
+#     expr('EnchantedCave(x)'),
+#     expr('CasbahofBéjaïa(x)'),
+#     expr('WaterMuseum(x)'),
+#     expr('KafridaWaterfalls(x)'),
+#     expr('DarkLake(x)'),
+#     expr('CapCarbon(x)'),
+#     expr('TiziNberbar(x)'),
+#     expr('Medina(x)'),
+#     expr('TaosAmroucheCultureHouse(x)'),
+#     expr('PlaceGueydon(x)'),
+#     expr('SoukElDjemaa(x)')
+# ]
 
-for condition in conditions:
-    if fol_fc_ask(kb, condition):
-        print(f'{condition} est vrai.')
-        memory[condition] = True
-    else:
-        print(f'{condition} est faux.')
-        memory[condition] = False
+# for condition in conditions:
+#     if fol_fc_ask(kb, condition):
+#         print(f'{condition} est vrai.')
+#         memory[condition] = True
+#     else:
+#         print(f'{condition} est faux.')
+#         memory[condition] = False
 
-print('\nDestinations dans la mémoire :')
-for p, value in memory.items():
-    if value:
-        print(f'{p}')
+# print('\nDestinations dans la mémoire :')
+# for p, value in memory.items():
+#     if value:
+#         print(f'{p}')
 
 
 # tkinter window
