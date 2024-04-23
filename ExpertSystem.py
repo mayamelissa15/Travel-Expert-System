@@ -99,19 +99,23 @@ for p, value in memory.items():
 
 # tkinter window
 
+
 def button_func():
-    query = expr(f'Target({var_1.get()},{var_2.ge()},{var_3.get()},k)')
+    query = expr(f'{var_1.get}+(Maya) & {var_2.get}+(Maya) & {var_1.get()}+(Maya)')
     r = fol_fc_ask(kb, query)
-    result = list(r)
-    value = list(result[0].values())
-    frame_5 = ttk.Frame(window)
-    label_r = ttk.Label(frame_5, text=f'Therecommended destination is:')
-    frame_5.pack()
-    label_r.pack()
-    frame_6 = ttk.Frame(window)
-    a = ttk.Label(frame_6, text=f'{value}')
-    frame_6.pack()
-    a.pack()
+    print(list(r))
+    #result = list(r)
+    #value = list(result[0].values())
+    #frame_5 = ttk.Frame(window)
+    #label_r = ttk.Label(frame_5, text=f'The recommended destination is:')
+    #frame_5.pack()
+    #label_r.pack()
+    #frame_6 = ttk.Frame(window)
+    #a = ttk.Label(frame_6, text=f'{value}')
+    #frame_6.pack()
+    #a.pack()
+    
+
 
 
 # Initialize the ThemedTk window
