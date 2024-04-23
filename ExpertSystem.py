@@ -20,7 +20,7 @@ kb.tell(expr('Beach(x) & Secluded(x) & Luxurious(x) ==> ThaisBeach(x)'))
 kb.tell(expr('Beach(x) & Crowded(x) & Luxurious(x) ==> AtlantisBeach(x)'))
 kb.tell(expr('Historical(x) & Secluded(x) & Cheap(x) ==> BourdjMoussaMuseum(x)'))
 kb.tell(expr('Historical(x) & Secluded(x)  & Luxurious(x) ==> EnchantedCave(x)'))
-kb.tell(expr('Historical(x) & Crowded(x) & Cheap(x) ==> CasbahofBéjaïa(x)'))
+kb.tell(expr('Historical(x) & Crowded(x) & Cheap(x) ==> CasbahofBejaia(x)'))
 kb.tell(expr('Historical(x) & Crowded(x) & Luxurious(x) ==> WaterMuseum(x)'))
 kb.tell(expr('Nature(x) & Secluded(x) & Cheap(x) ==> KafridaWaterfalls(x)'))
 kb.tell(expr('Nature(x) & Secluded(x) & Luxurious(x) ==> DarkLake(x)'))
@@ -114,11 +114,15 @@ def button_func():
     a.pack()
 
 
-
-
-window = tk.Tk()
+# Initialize the ThemedTk window
+window = ThemedTk(theme="arc")
 window.geometry('800x400')
 window.title('Trip recommender')
+
+# Configure the window's appearance
+window.config(padding=20, relief='solid', borderwidth=2)
+
+# Create the frames and widgets
 frame_1 = ttk.Frame(window)
 l_intro = ttk.Label(frame_1, text='A personalised travel recommender, all you gotta do is answer on the three questions bellow :')
 frame_1.pack()
@@ -149,6 +153,7 @@ label_3.pack(side='left')
 entry_3.pack(side='left')
 
 button = ttk.Button(window, text='See results', command= button_func)
+button.config(relief='raised', borderwidth=2, padding=5)
 button.pack()
 
 window.mainloop()
