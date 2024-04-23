@@ -4,6 +4,7 @@ import numpy as np
 from aima.utils import *
 from aima.logic import *
 
+#KB
 kb = FolKB()
 kb.tell(expr('Target(x)'))
 kb.tell(expr('Leisure(x)'))
