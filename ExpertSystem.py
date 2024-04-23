@@ -1,8 +1,8 @@
 import tkinter as tk
 from tkinter import ttk
 import numpy as np
-from aima3.utils import *
-from aima3.logic import *
+from aima.utils import *
+from aima.logic import *
 
 #KB
 kb = FolKB()
@@ -32,20 +32,87 @@ kb.tell(expr('City(x) & Crowded(x) & Cheap(x) ==> PlaceGueydon(x)'))
 kb.tell(expr('City(x) & Crowded(x) & Luxurious(x) ==> SoukElDjemaa(x)'))
 
 
+
+
+#agenda
+
+agenda = []
+ 
+agenda.append(expr('Luxurious(x)'))
+agenda.append(expr('Cheap(x)'))
+agenda.append(expr('Crowded(x)'))
+agenda.append(expr('Secluded(x)'))
+agenda.append(expr('Historical(x)'))
+agenda.append(expr('Nature(x)')) 
+agenda.append(expr('City(x)'))
+
+
+# Initialisation de la mémoire
+memory = {}
+
+seen = set() 
+while agenda:
+    p = agenda.pop(0)
+    if p in seen:
+        continue  
+    seen.add(p)
+    if fol_fc_ask(kb, p):
+        print(f'{p} is true.')
+        memory[p] = True
+    else:
+        print(f'{p} is false.')
+        memory[p] = False
+
+# Liste des conditions à vérifier
+conditions = [
+    expr('TichyBeach(x)'),
+    expr('AiguadesBeach(x)'),
+    expr('ThaisBeach(x)'),
+    expr('AtlantisBeach(x)'),
+    expr('BourdjMoussaMuseum(x)'),
+    expr('EnchantedCave(x)'),
+    expr('CasbahofBéjaïa(x)'),
+    expr('WaterMuseum(x)'),
+    expr('KafridaWaterfalls(x)'),
+    expr('DarkLake(x)'),
+    expr('CapCarbon(x)'),
+    expr('TiziNberbar(x)'),
+    expr('Medina(x)'),
+    expr('TaosAmroucheCultureHouse(x)'),
+    expr('PlaceGueydon(x)'),
+    expr('SoukElDjemaa(x)')
+]
+
+for condition in conditions:
+    if fol_fc_ask(kb, condition):
+        print(f'{condition} est vrai.')
+        memory[condition] = True
+    else:
+        print(f'{condition} est faux.')
+        memory[condition] = False
+
+print('\nDestinations dans la mémoire :')
+for p, value in memory.items():
+    if value:
+        print(f'{p}')
+
+
+# tkinter window
+
 def button_func():
-    query = expr(f'Target({var_1.get()},{var_2.get()},{var_3.get()},k)')
+    query = expr(f'Target({var_1.get()},{var_2.ge()},{var_3.get()},k)')
     r = fol_fc_ask(kb, query)
     result = list(r)
     value = list(result[0].values())
     frame_5 = ttk.Frame(window)
-    label_r = ttk.Label(frame_5, text=f'The recommended destination is:')
+    label_r = ttk.Label(frame_5, text=f'Therecommended destination is:')
     frame_5.pack()
     label_r.pack()
     frame_6 = ttk.Frame(window)
     a = ttk.Label(frame_6, text=f'{value}')
     frame_6.pack()
     a.pack()
-    
+
 
 
 
