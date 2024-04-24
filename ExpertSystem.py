@@ -4,7 +4,7 @@ from aima.utils import expr
 from aima.logic import FolKB, fol_fc_ask
 from ttkthemes import ThemedTk
 
-# Knowledge Base
+# Base de connaissances
 kb = FolKB()
 kb.tell(expr('Beach(x)'))
 kb.tell(expr('Historical(x)'))
@@ -31,10 +31,10 @@ kb.tell(expr('City(x) & Secluded(x) & Luxurious(x) ==> TaosAmroucheCultureHouse(
 kb.tell(expr('City(x) & Crowded(x) & Cheap(x) ==> PlaceGueydon(x)'))
 kb.tell(expr('City(x) & Crowded(x) & Luxurious(x) ==> SoukElDjemaa(x)'))
 
-# Agenda
+# Initialisation de l'agenda
 agenda = []
 
-
+# Fonction de traitement du bouton
 def button_func():
     destinations = [var_1.get(), var_2.get(), var_3.get()]
     user = expr('Bejaia')
@@ -43,12 +43,14 @@ def button_func():
     memory = {}
     result = []
 
+    # Analyse de chaque destination
     for p in agenda:
         if fol_fc_ask(kb, expr(p)):
             memory[p] = True
         else:
             memory[p] = False
 
+    # Recherche des destinations recommandées en fonction des préférences
     if memory.get(expr('Beach(Bejaia)'), False) and memory.get(expr('Secluded(Bejaia)'), False) and memory.get(expr('Cheap(Bejaia)'), False):
         result.append(expr('TichyBeach(Bejaia)'))
     if memory.get(expr('Beach(Bejaia)'), False) and memory.get(expr('Crowded(Bejaia)'), False) and memory.get(expr('Cheap(Bejaia)'), False):
@@ -82,37 +84,76 @@ def button_func():
     if memory.get(expr('City(Bejaia)'), False) and memory.get(expr('Crowded(Bejaia)'), False) and memory.get(expr('Luxurious(Bejaia)'), False):
         result.append(expr('SoukElDjemaa(Bejaia)'))
 
-    
-
-    # Clear any existing result labels
+    # Effacer les labels de résultat existants
     for label in window.winfo_children():
         if isinstance(label, ttk.Label) and "Recommended destinations" in label.cget("text"):
             label.pack_forget()
 
-    # Update the result label with the recommended destinations
+    # Mise à jour du label de résultat avec les destinations recommandées
     if result:
         result_str = ', '.join(str(expr) for expr in result)
-        print(f"Recommended destinations: {result_str}")
-        result_label = ttk.Label(window, text=f"Recommended destinations: {result_str}")
+        print(f"Destinations recommandées : {result_str}")
+        explanation = generate_explanation(result)  # Générer l'explication
+        result_label = ttk.Label(window, text=f"Destinations recommandées : {result_str}\n{explanation}")
         result_label.pack(pady=10)
     else:
-        print("No matching destinations found.")
-        result_label = ttk.Label(window, text="No matching destinations found.")
+        print("Aucune destination correspondante trouvée.")
+        result_label = ttk.Label(window, text="Aucune destination correspondante trouvée.")
         result_label.pack(pady=10)
-# Create ThemedTk window
+
+# Générer l'explication pour les destinations recommandées
+def generate_explanation(destinations):
+    explanation = ""
+    for destination in destinations:
+        if destination == expr('TichyBeach(Bejaia)'):
+            explanation += "TichyBeach a été recommandé en raison de sa plage isolée et bon marché.\n"
+        elif destination == expr('AiguadesBeach(Bejaia)'):
+            explanation += "AiguadesBeach a été recommandé en raison de sa plage bondée et bon marché.\n"
+        elif destination == expr('ThaisBeach(Bejaia)'):
+            explanation += "ThaisBeach a été recommandé en raison de sa plage isolée et luxueuse.\n"
+        elif destination == expr('AtlantisBeach(Bejaia)'):
+            explanation += "AtlantisBeach a été recommandé en raison de sa plage bondée et luxueuse.\n"
+        elif destination == expr('BourdjMoussaMuseum(Bejaia)'):
+            explanation += "BourdjMoussaMuseum a été recommandé pour son caractère historique, sa tranquillité et son prix abordable.\n"
+        elif destination == expr('EnchantedCave(Bejaia)'):
+            explanation += "EnchantedCave a été recommandé pour son caractère historique, sa tranquillité et son luxe.\n"
+        elif destination == expr('CasbahofBejaia(Bejaia)'):
+            explanation += "CasbahofBejaia a été recommandé pour son caractère historique, sa foule et son prix abordable.\n"
+        elif destination == expr('WaterMuseum(Bejaia)'):
+            explanation += "WaterMuseum a été recommandé pour son caractère historique, sa foule et son luxe.\n"
+        elif destination == expr('KafridaWaterfalls(Bejaia)'):
+            explanation += "KafridaWaterfalls a été recommandé pour son aspect naturel, sa tranquillité et son prix abordable.\n"
+        elif destination == expr('DarkLake(Bejaia)'):
+            explanation += "DarkLake a été recommandé pour son aspect naturel, sa tranquillité et son luxe.\n"
+        elif destination == expr('CapCarbon(Bejaia)'):
+            explanation += "CapCarbon a été recommandé pour son aspect naturel, sa foule et son prix abordable.\n"
+        elif destination == expr('TiziNberbar(Bejaia)'):
+            explanation += "TiziNberbar a été recommandé pour son aspect naturel, sa foule et son luxe.\n"
+        elif destination == expr('Medina(Bejaia)'):
+            explanation += "Medina a été recommandé pour son aspect urbain, sa tranquillité et son prix abordable.\n"
+        elif destination == expr('TaosAmroucheCultureHouse(Bejaia)'):
+            explanation += "TaosAmroucheCultureHouse a été recommandé pour son aspect urbain, sa tranquillité et son luxe.\n"
+        elif destination == expr('PlaceGueydon(Bejaia)'):
+            explanation += "PlaceGueydon a été recommandé pour son aspect urbain, sa foule et son prix abordable.\n"
+        elif destination == expr('SoukElDjemaa(Bejaia)'):
+            explanation += "SoukElDjemaa a été recommandé pour son aspect urbain, sa foule et son luxe.\n"
+        # Ajouter d'autres explications pour les autres destinations ici
+    return explanation
+
+# Créer la fenêtre ThemedTk
 window = ThemedTk(theme="arc")
 window.geometry('800x400')
-window.title('Trip Recommender')
+window.title('Recommandateur de voyages')
 
-# Create frames and widgets
+# Créer les cadres et les widgets
 frame_1 = ttk.Frame(window)
-l_intro = ttk.Label(frame_1, text='A personalised travel recommender. Answer the following questions:')
+l_intro = ttk.Label(frame_1, text='Un recommandateur de voyages personnalisé. Répondez aux questions suivantes :')
 frame_1.pack()
 l_intro.pack()
 
 var_1 = tk.StringVar(value='Beach')
 frame_2 = ttk.Frame(window)
-label_1 = ttk.Label(frame_2, text='Preferred leisure activity:')
+label_1 = ttk.Label(frame_2, text='Activité de loisir préférée :')
 entry_1 = ttk.Combobox(frame_2, values=('Beach', 'Historical', 'Nature', 'City'), textvariable=var_1)
 frame_2.pack(pady=10)
 label_1.pack(side='left')
@@ -120,7 +161,7 @@ entry_1.pack(side='left')
 
 var_2 = tk.StringVar(value='Secluded')
 frame_3 = ttk.Frame(window)
-label_2 = ttk.Label(frame_3, text='Preference for crowds:')
+label_2 = ttk.Label(frame_3, text='Préférence pour les foules :')
 entry_2 = ttk.Combobox(frame_3, values=('Secluded', 'Crowded'), textvariable=var_2)
 frame_3.pack(pady=10)
 label_2.pack(side='left')
@@ -128,13 +169,13 @@ entry_2.pack(side='left')
 
 var_3 = tk.StringVar(value='Cheap')
 frame_4 = ttk.Frame(window)
-label_3 = ttk.Label(frame_4, text='Budget preference:')
+label_3 = ttk.Label(frame_4, text='Préférence budgétaire :')
 entry_3 = ttk.Combobox(frame_4, values=('Cheap', 'Luxurious'), textvariable=var_3)
 frame_4.pack(pady=10)
 label_3.pack(side='left')
 entry_3.pack(side='left')
 
-button = ttk.Button(window, text='See results', command=button_func)
+button = ttk.Button(window, text='Voir les résultats', command=button_func)
 button.config(style='Accent.TButton')
 button.pack(pady=10)
 
